@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="tr" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>She's Mentoring — Başvuru Sunumu</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=JetBrains+Mono:wght@400;700&amp;family=Inter:wght@400;600;700;900&amp;family=Courier+Prime:wght@400;700&amp;family=OpenDyslexic:wght@400;700&amp;display=swap" rel="stylesheet">
+  <style>
+  html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+
+  :root {
+    --bg: #0A0A0A;
+    --surface: #1A1A1A;
+    --text: #FFFFFF;
+    --accent: #00D9FF;
+    --accent2: #888888;
+    --accent3: #FF1B6D;
+    --font-main: 'Space Mono', monospace;
+    --font-body: 'Inter', sans-serif;
+    --base-size: 15;
+  }
+
+  * { box-sizing: border-box; }
+
+  .brutalist-border { border: 3px solid var(--text); }
+  .brutalist-border-thin { border: 2px solid var(--text); }
+
+  .nav-item {
+    cursor: pointer;
+    padding: 6px 0;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: calc(var(--base-size) * 0.78px);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent2);
+    transition: color 0.15s, padding-left 0.15s;
+    border: none;
+    background: none;
+    text-align: left;
+    width: 100%;
+    display: block;
+    line-height: 1.3;
+  }
+  .nav-item:hover, .nav-item.active {
+    color: var(--accent);
+    padding-left: 8px;
+  }
+  .nav-item.active { border-left: 4px solid var(--accent); }
+
+  .slide { display: none; }
+  .slide.active-slide { display: block; }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    font-family: var(--font-main);
+    font-size: calc(var(--base-size) * 0.65px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid var(--text);
+    margin-right: 6px;
+    margin-bottom: 4px;
+  }
+
+  .source-tag {
+    font-family: var(--font-main);
+    font-size: calc(var(--base-size) * 0.6px);
+    color: var(--accent2);
+    border-bottom: 1px dashed var(--accent2);
+    display: inline;
+    cursor: default;
+  }
+
+  .metric-box {
+    padding: 16px;
+    border: 3px solid var(--text);
+    text-align: center;
+  }
+  .metric-value {
+    font-family: var(--font-main);
+    font-size: calc(var(--base-size) * 2.4px);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent);
+  }
+  .metric-label {
+    font-family: var(--font-body);
+    font-size: calc(var(--base-size) * 0.75px);
+    margin-top: 6px;
+    color: var(--text);
+  }
+
+  .customize-panel {
+    position: fixed;
+    top: 0;
+    right: -240px;
+    width: 240px;
+    height: 100%;
+    background: var(--surface);
+    border-left: 3px solid var(--text);
+    z-index: 100;
+    transition: right 0.3s ease;
+    padding: 24px;
+    overflow-y: auto;
+  }
+  .customize-panel.open { right: 0; }
+
+  .overlay-bg {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.3); z-index: 99; display: none;
+  }
+  .overlay-bg.open { display: block; }
+
+  /* Dyslexic mode */
+  .dyslexic-mode * { font-family: 'OpenDyslexic', sans-serif !important; letter-spacing: 1px !important; word-spacing: 3px !important; line-height: 1.8 !important; }
+
+  /* High contrast */
+  .high-contrast { --bg: #000000; --surface: #000000; --text: #FFFF00; --accent: #FF0000; --accent2: #00FFFF; }
+  .high-contrast .brutalist-border, .high-contrast .brutalist-border-thin { border-color: #FFFF00; }
+
+  /* Protanopia */
+  .protanopia { --accent: #0055BF; --accent2: #8B8000; }
+
+  /* Deuteranopia */
+  .deuteranopia { --accent: #D4A017; --accent2: #4169E1; }
+
+  /* Tritanopia */
+  .tritanopia { --accent: #FF6B6B; --accent2: #2E8B57; }
+
+  /* Large text */
+  .large-text { --base-size: 20; }
+
+  .slide-content h2 {
+    font-family: var(--font-main);
+    font-size: calc(var(--base-size) * 1.8px);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 16px;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+  }
+  .slide-content h3 {
+    font-family: var(--font-main);
+    font-size: calc(var(--base-size) * 1.1px);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 18px 0 8px 0;
+    letter-spacing: 0.5px;
+  }
+  .slide-content p, .slide-content li {
+    font-family: var(--font-body);
+    font-size: calc(var(--base-size) * 0.9px);
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .slide-content ul { list-style: none; padding: 0; margin: 0; }
+  .slide-content li { padding: 3px 0; padding-left: 16px; position: relative; }
+  .slide-content li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .cover-title {
+    font-family: var(--font-main);
+    font-size: calc(var(--base-size) * 3.2px);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    color: var(--text);
+  }
+  .cover-subtitle {
+    font-family: var(--font-main);
+    font-size: calc(var(--base-size) * 1.1px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-top: 12px;
+  }
+  .cover-name {
+    font-family: var(--font-body);
+    font-size: calc(var(--base-size) * 1px);
+    color: var(--accent2);
+    margin-top: 20px;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 8px;
+    background: linear-gradient(90deg, #00D9FF, #FF1B6D, #00D9FF);
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease infinite;
+    z-index: 101;
+    box-shadow: 0 -4px 20px rgba(0, 217, 255, 0.4), 0 -2px 10px rgba(255, 27, 109, 0.3);
+    width: 0%;
+    transition: width 0.1s ease;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+  }
+
+  /* Grid texture */
+  body.texture-grid::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      linear-gradient(0deg, transparent 24%, rgba(255,255,255,.05) 25%, rgba(255,255,255,.05) 26%, transparent 27%, transparent 74%, rgba(255,255,255,.05) 75%, rgba(255,255,255,.05) 76%, transparent 77%, transparent),
+      linear-gradient(90deg, transparent 24%, rgba(255,255,255,.05) 25%, rgba(255,255,255,.05) 26%, transparent 27%, transparent 74%, rgba(255,255,255,.05) 75%, rgba(255,255,255,.05) 76%, transparent 77%, transparent);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  @media (max-width: 768px) {
+    .desktop-sidebar { display: none !important; }
+    .mobile-header { display: flex !important; }
+    .main-content-area { margin-left: 0 !important; }
+  }
+  @media (min-width: 769px) {
+    .mobile-header { display: none !important; }
+  }
+
+  .fade-in { animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full" style="background: var(--bg); color: var(--text);">
+  <div id="app-wrapper" class="h-full w-full flex" style="overflow: hidden;"><!-- MOBILE HEADER -->
+   <header class="mobile-header fixed top-0 left-0 w-full z-50 p-3 items-center justify-between" style="background: var(--bg); border-bottom: 3px solid var(--text); display: none;"><button id="mobile-menu-btn" aria-label="Menüyü aç" style="background:none;border:none;cursor:pointer;"> <i data-lucide="menu" style="width:24px;height:24px;color:var(--text)"></i> </button> <span style="font-family:var(--font-main);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;">SUNUM</span> <button id="mobile-customize-btn" aria-label="Özelleştirme ayarları" style="background:none;border:none;cursor:pointer;"> <i data-lucide="sliders" style="width:20px;height:20px;color:var(--text)"></i> </button>
+   </header><!-- LEFT SIDEBAR -->
+   <nav id="sidebar" class="desktop-sidebar h-full flex-shrink-0" style="width: 240px; background: var(--surface); border-right: 3px solid var(--text); overflow-y: auto; padding: 20px 16px; position: relative; z-index: 60;" aria-label="Ana gezinti">
+    <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 2px solid var(--accent2);">
+     <div style="font-family:var(--font-main);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent2);margin-bottom:12px;">
+      SHE'S MENTORING
+     </div>
+     <div id="project-title-sidebar" style="font-family:var(--font-main);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:var(--accent);margin-bottom:16px;line-height:1.3;">
+      Dijital Prototipleme &amp; Zanaat Yetenek Ağı
+     </div>
+    </div>
+    <div style="margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--text);">
+     <div id="sidebar-name" style="font-family:var(--font-main);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);">
+      AYŞEGÜL ATIK
+     </div>
+     <div style="font-family:var(--font-body);font-size:10px;color:var(--accent2);margin-top:3px;">
+      Teknoloji &amp; İnovasyon
+     </div>
+    </div>
+    <div id="nav-list" role="list"><button class="nav-item active" data-slide="0" role="listitem">00 — Kapak</button> <button class="nav-item" data-slide="1" role="listitem">01 — Değer Teklifi</button> <button class="nav-item" data-slide="2" role="listitem">02 — Hedef Müşteri &amp; Pazar</button> <button class="nav-item" data-slide="3" role="listitem">03 — İş Modeli &amp; Gelir</button> <button class="nav-item" data-slide="4" role="listitem">04 — Metrikler &amp; KPI</button> <button class="nav-item" data-slide="5" role="listitem">05 — Yol Haritası</button> <button class="nav-item" data-slide="6" role="listitem">06 — Kaynaklar</button> <button class="nav-item" data-slide="7" role="listitem">07 — Riskler &amp; Sürdürülebilirlik</button> <button class="nav-item" data-slide="8" role="listitem">08 — İletişim</button>
+    </div>
+    <div style="margin-top: 24px; padding-top: 14px; border-top: 2px solid var(--text);"><a href="https://instagram.com/aysatik" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:6px;font-family:var(--font-main);font-size:10px;font-weight:700;text-transform:uppercase;color:var(--accent2);text-decoration:none;margin-bottom:8px;" aria-label="Instagram: aysatik"> <i data-lucide="instagram" style="width:14px;height:14px;"></i> <span id="sidebar-ig1">@aysatik</span> </a> <a href="https://instagram.com/synthays" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:6px;font-family:var(--font-main);font-size:10px;font-weight:700;text-transform:uppercase;color:var(--accent2);text-decoration:none;margin-bottom:8px;" aria-label="Instagram: synthays"> <i data-lucide="instagram" style="width:14px;height:14px;"></i> <span id="sidebar-ig2">@synthays</span> </a> <a href="https://www.linkedin.com/in/aysegulatik/" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:6px;font-family:var(--font-main);font-size:10px;font-weight:700;text-transform:uppercase;color:var(--accent2);text-decoration:none;margin-bottom:8px;" aria-label="LinkedIn profili"> <i data-lucide="linkedin" style="width:14px;height:14px;"></i> LinkedIn </a> <a href="https://aysegulatik.xyz" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:6px;font-family:var(--font-main);font-size:10px;font-weight:700;text-transform:uppercase;color:var(--accent2);text-decoration:none;" aria-label="Website"> <i data-lucide="globe" style="width:14px;height:14px;"></i> <span id="sidebar-website">aysegulatik.xyz</span> </a>
+    </div>
+    <div style="position:absolute;bottom:16px;left:16px;right:16px;"><button id="customize-toggle" aria-label="Özelleştirme ayarlarını aç" style="display:flex;align-items:center;gap:6px;font-family:var(--font-main);font-size:10px;font-weight:700;text-transform:uppercase;background:none;border:2px solid var(--text);padding:8px 12px;cursor:pointer;width:100%;color:var(--text);"> <i data-lucide="sliders" style="width:14px;height:14px;"></i> Özelleştir </button>
+    </div>
+   </nav><!-- MOBILE SIDEBAR OVERLAY -->
+   <div id="mobile-sidebar-overlay" class="overlay-bg" style="z-index:55;"></div>
+   <nav id="mobile-sidebar" style="position:fixed;top:0;left:-280px;width:260px;height:100%;background:var(--surface);border-right:3px solid var(--text);z-index:58;transition:left 0.3s;padding:60px 16px 20px;overflow-y:auto;" aria-label="Mobil gezinti">
+    <div id="mobile-nav-list"></div>
+   </nav><!-- MAIN CONTENT -->
+   <main id="main-content" class="main-content-area h-full flex-1" style="overflow-y: auto; padding: 32px 40px; position: relative;" role="main"><!-- SLIDE 0: COVER -->
+    <section class="slide active-slide" data-index="0">
+     <div class="fade-in" style="display:flex;flex-direction:column;justify-content:center;height:100%;max-width:700px;">
+      <div>
+       <div class="tag">
+        SHE'S MENTORING
+       </div>
+       <div class="tag">
+        2026
+       </div>
+      </div>
+      <h1 id="cover-title" class="cover-title" style="margin-top:24px;">Dijital<br>
+        Prototipleme &amp;<br>
+        Zanaat Yetenek Ağı</h1>
+      <p id="cover-subtitle" class="cover-subtitle">SHE'S MENTORING — Teknoloji &amp; İnovasyon</p>
+      <p id="cover-name" class="cover-name">Ayşegül Atik</p>
+      <div style="margin-top:32px;width:80px;height:4px;background:var(--accent);"></div>
+     </div>
+    </section><!-- SLIDE 1: DEĞER TEKLİFİ -->
+    <section class="slide" data-index="1">
+     <div class="slide-content fade-in" style="max-width:720px;">
+      <div class="tag" style="margin-bottom:16px;">
+       01
+      </div>
+      <h2>Değer Teklifi</h2>
+      <h3>Projenin Çıkış Noktası ve Sahadaki Boşluk</h3>
+      <p style="font-family:var(--font-body);font-size:calc(var(--base-size)*0.9px);line-height:1.65;color:var(--text);margin-bottom:12px;">Üniversitedeki dijital ağırlıklı eğitimim ile IFA Paris ve Vakko ESMOD'daki eğitmenlik tecrübelerim, endüstride çok net bir açığı fark etmemi sağladı: Profesyoneller dijital teknolojilere karşı hem bilgisiz hem de ciddi bir önyargıya sahip. Öte yandan, dijital üretim çalışmalarımı paylaştığımda, sadece modanın değil, farklı disiplinlerden birçok kişinin de ilgi duyduğunu gözlemledim. İnsanlar teknolojiye kapalı değil; sadece hangi aracın ne işe yaradığını, nereden başlayacaklarını ya da bunu nerede öğrenebileceklerini bilmiyor.</p>
+      <h3>Çözülen Problem: Maliyet ve Çevre Krizi</h3>
+      <p style="font-family:var(--font-body);font-size:calc(var(--base-size)*0.9px);line-height:1.65;color:var(--text);margin-bottom:12px;">Çevre kirliliğine en çok katkı sağlayan sektörlerde, fiziksel numune üretimini dijitalleştirmek artık bir tercih değil, zorunluluktur. Prototip aşamasının dijitalize edilmesi kumaş ve materyal israfını önler, hataların ekranda çözülmesini sağlar, gereksiz lojistik ve masrafları bitirerek operasyonel maliyetleri ciddi oranda düşürür.</p>
+      <h3>Temel Değer Teklifim: Eğitim ve Üretim Laboratuvarı</h3>
+      <p style="font-family:var(--font-body);font-size:calc(var(--base-size)*0.9px);line-height:1.65;color:var(--text);margin-bottom:12px;">Dijital araçların erişilebilir bir eğitime dönüştürüldüğü, şahıslara ve kurumlara eğitim/danışmanlık sunan bir merkez ve aktif üretim yapılan bir laboratuvar. Amacım, insanların "yapamam" dediği teknolojik eşiği, kendi pratikleri üzerinden aşmalarına rehberlik etmek.</p>
+      <h3>İleri Yönlü Vizyon: Kesişim ve Ağ (Network) Merkezi</h3>
+      <p style="font-family:var(--font-body);font-size:calc(var(--base-size)*0.9px);line-height:1.65;color:var(--text);margin-bottom:16px;">Uzun vadeli hedefim; laboratuvarın sadece ders anlatılan bir yer olmaktan çıkıp, disiplinlerarası yaratıcıların, öğrencilerin ve endüstri profesyonellerinin bir araya geldiği bir network merkezine dönüşmesi.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0;">
+       <div class="brutalist-border-thin" style="padding:14px;">
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.75px);text-transform:uppercase;color:var(--accent);margin-bottom:6px;">
+         ① Eğitim &amp; Mentorluk
+        </div>
+        <p style="font-size:calc(var(--base-size)*0.8px);margin:0;">Dijital üretim araçları, prototipleme workflow, veri odaklı tasarım okuryazarlığı. Meraklılardan profesyonellere, disiplinlerarası açık.</p>
+       </div>
+       <div class="brutalist-border-thin" style="padding:14px;">
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.75px);text-transform:uppercase;color:var(--accent);margin-bottom:6px;">
+         ② B2B Hizmet
+        </div>
+        <p style="font-size:calc(var(--base-size)*0.8px);margin:0;">Dijital ikiz, sanal prototip, kurum dönüşüm danışmanlığı. Endüstri profesyonellerine ve markalarına özel çözümler.</p>
+       </div>
+       <div class="brutalist-border-thin" style="padding:14px;">
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.75px);text-transform:uppercase;color:var(--accent);margin-bottom:6px;">
+         ③ Üretim Ağı
+        </div>
+        <p style="font-size:calc(var(--base-size)*0.8px);margin:0;">Eğitilen yeteneklerle oluşturulan esnek, proje bazlı üretim ekipleri ve yaşayan ekosistem.</p>
+       </div>
+      </div>
+      <h3>Ekosistem Döngüsü: Flywheel Etkisi</h3>
+      <p style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.85px);line-height:1.8;color:var(--accent2);border-left:4px solid var(--accent);padding-left:16px;margin:16px 0;">Eğitim → Yetenek Havuzu → B2B Kapasite → Müşteri Referansları → Sponsorlu Etkinlikler &amp; Açık Portfolyo Günleri → Endüstri Buluşmalarında Genç Yetenek Tanışması → Döngü Genişler</p>
+      <h3>Farklılaşma Unsurları</h3>
+      <ul>
+       <li><strong>Bütünsel Yaklaşım:</strong> Sadece eğitim ya da servis değil — disiplinlerarası ağ merkezliği, yaşayan ekosistem modeli.</li>
+       <li><strong>Pedagoji:</strong> Teknolojiyi tasarım sezgisi, el pratiği ve çevre bilinci üzerinden öğreten yaklaşım.</li>
+       <li><strong>Sektörel Etki (Veri):</strong> Browzwear/CLO3D vaka çalışmalarında geliştirme süresinde <strong>%30 iyileşme</strong>, fiziksel numune azaltmada <strong>%50–100</strong> potansiyel.</li>
+      </ul><span class="source-tag">Kaynak: Browzwear, "Customer Success Stories", 2023</span>
+     </div>
+    </section><!-- SLIDE 2: HEDEF MÜŞTERİ & PAZAR -->
+    <section class="slide" data-index="2">
+     <div class="slide-content fade-in" style="max-width:720px;">
+      <div class="tag" style="margin-bottom:16px;">
+       02
+      </div>
+      <h2>Hedef Pazar &amp; Sektörel Genişleme</h2>
+      <h3>Müşteri Belirleme Metodolojisi</h3>
+      <p style="font-family:var(--font-body);font-size:calc(var(--base-size)*0.9px);line-height:1.65;color:var(--text);margin-bottom:12px;">Uluslararası moda okullarındaki öğrenci-endüstri kopukluğunu gösteren akademik saha gözlemleri ve B2B markalarla yapılan birebir "dijital adaptasyon" ihtiyaç analizleri sonucunda kurgulanmıştır.</p>
+      <h3>Pazar Büyüklüğü (TAM — Toplam Adreslenebilir Pazar)</h3>
+      <ul>
+       <li><strong>Küresel 3D Moda ve Prototipleme Pazarı:</strong> Grand View Research verilerine göre 2023'te 1 Milyar Dolar seviyesinde olan bu pazar, yıllık ortalama %15 büyüyerek 2030'da 3.5 Milyar Dolar'ı aşacaktır.</li>
+       <li><strong>Yerel/Bölgesel Potansiyel:</strong> Türkiye hazır giyim ve tekstil ihracatı yıllık 30 Milyar Dolar seviyesindedir. Bu devasa hacimdeki numune ve prototip israfı başlı başına milyonlarca dolarlık bir iyileştirme pazarı yaratmaktadır.</li>
+      </ul>
+      <h3>Neden Moda ile Başlıyoruz? (Pilot Alan)</h3>
+      <p style="font-family:var(--font-body);font-size:calc(var(--base-size)*0.9px);line-height:1.65;color:var(--text);margin-bottom:12px;">Moda sektörü; dinamiklerini en iyi bildiğimiz, diline hakim olduğumuz ve dijital dönüşümün etkisinin (ROI) en hızlı ölçülebildiği ideal bir test alanıdır. Ancak bu vizyon tek bir sektöre hapsedilemez.</p>
+      <h3>Genişleme Alanları — Çapraz Sektör Uygulamaları</h3>
+      <p style="font-family:var(--font-body);font-size:calc(var(--base-size)*0.85px);line-height:1.65;color:var(--text);margin-bottom:12px;font-style:italic;">Modelimiz, 3D prototipleme ve dijital ikiz teknolojilerinden faydalanabilecek tüm alanlara ölçeklenebilir:</p>
+      <ul>
+       <li><strong>Ayakkabı ve Aksesuar:</strong> CAD döngü sürelerinin kısaltılması ve karmaşık kalıp/malzeme testlerinin sanal ortamda yapılması.</li>
+       <li><strong>Ev Tekstili ve Mobilya:</strong> Fiziksel üretim öncesi doku, drapaj ve hacim simülasyonları ile B2B sunum süreçlerinin dijitalleşmesi.</li>
+       <li><strong>Kültür-Sanat ve Müzeler:</strong> Tarihi veya karmaşık giysilerin/dokuların sergileme amaçlı dijital arşivlenmesi ve mekansal bilişim (VR) ile deneyime dönüştürülmesi.</li>
+       <li><strong>Endüstriyel Tasarım:</strong> Malzeme verisiyle çalışarak üretim bantları için hatasız teknik veri akışı sağlanması.</li>
+      </ul>
+      <h3>Go-to-Market (Pazara Çıkış) Kanalları</h3>
+      <ul>
+       <li><strong>B2B Kurumsal Müşteriler:</strong> Aktif LinkedIn kampanyaları ve vaka analizi (case study) yayınları.</li>
+       <li><strong>Sektörel Ağlar:</strong> İTKİB, İHKİB gibi ihracatçı birlikleri ve sektörel derneklerin network ağları.</li>
+       <li><strong>Akademik Ortaklıklar:</strong> Üniversitelerin moda ve tasarım fakülteleriyle düzenlenecek ortak "Açık Kapı" (Open House) etkinlikleri.</li>
+      </ul><span class="source-tag">Kaynak: McKinsey, "The State of Fashion 2024"; Grand View Research; İTKİB Raporları; Saha mülakatları, 2023–2024</span>
+     </div>
+    </section><!-- SLIDE 3: İŞ MODELİ & GELİR -->
+    <section class="slide" data-index="3">
+     <div class="slide-content fade-in" style="max-width:720px;">
+      <div class="tag" style="margin-bottom:16px;">
+       03
+      </div>
+      <h2>İş Modeli &amp; Ekosistem</h2>
+      <h3>Üç Katmanlı, Birbirini Besleyen Yapı</h3>
+      <p style="font-family:var(--font-body);font-size:calc(var(--base-size)*0.85px);line-height:1.65;color:var(--text);margin-bottom:16px;font-style:italic;">Sistemimiz birbirini besleyen üç temel sütun üzerinde yükselir:</p>
+      <div style="display:grid;grid-template-columns:1fr;gap:16px;margin:16px 0;">
+       <div class="brutalist-border-thin" style="padding:16px;">
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.85px);text-transform:uppercase;color:var(--accent);margin-bottom:8px;">
+         ① Katman — Eğitim (Bireysel &amp; Kurumsal Gelişim)
+        </div>
+        <ul style="margin:0;">
+         <li><strong>Webinarlar:</strong> Fiziksel mekana bağımlı kalmadan, geniş kitlelere ulaşan, teknolojideki güncel gelişmeleri aktaran kısa formatlı, uluslararası erişime açık oturumlar.</li>
+         <li><strong>Uzmanlık Workshopları:</strong> Meraklılardan profesyonellere kadar, dijital araçları (CLO3D, Browzwear, VR) tasarım sezgisiyle birleştiren derinlemesine uygulamalı atölyeler.</li>
+        </ul>
+       </div>
+       <div class="brutalist-border-thin" style="padding:16px;">
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.85px);text-transform:uppercase;color:var(--accent);margin-bottom:8px;">
+         ② Katman — Hizmet &amp; Kurumsal Dönüşüm Danışmanlığı (B2B)
+        </div>
+        <ul style="margin:0;">
+         <li><strong>Proje Bazlı Üretim:</strong> Koleksiyonların dijital ikizlerinin yaratılması, sanal numune ve 3D katalog hizmetleri.</li>
+         <li><strong>Dönüşüm Danışmanlığı:</strong> Ekiplerin kendi sistemlerini kurabilmesi için "yol haritası" ve ekip içi eğitimler.</li>
+         <li><strong>Çapraz Gelir (Cross-Sell):</strong> Moda eğitiminden başlayan ilişkinin, ayakkabı veya ev tekstili B2B ortaklığına evrilmesi.</li>
+        </ul>
+       </div>
+       <div class="brutalist-border-thin" style="padding:16px;">
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.85px);text-transform:uppercase;color:var(--accent);margin-bottom:8px;">
+         ③ Katman — Esnek Yetenek Ağı (Talent Network)
+        </div>
+        <ul style="margin:0;">
+         <li><strong>Ağ Yapısı:</strong> Eğitimlerimizden geçen, çalışma disiplini yakından bilinen genç yeteneklerle kurulan, projeye özel ölçeklenebilen üretim havuzu.</li>
+         <li><strong>Çift Fayda:</strong> Sistemin kendi üretim kapasitesini sınırsız kılarken, genç tasarımcılara gerçek endüstri deneyimi sağlar.</li>
+        </ul>
+       </div>
+      </div>
+      <h3>Flywheel Etkisi — Döngüsel Büyüme</h3>
+      <p style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.85px);line-height:1.8;color:var(--accent2);border-left:4px solid var(--accent);padding-left:16px;margin:16px 0;">Eğitim → Yetenek havuzu büyür → B2B hizmette kapasite artar → Müşteri referansıyla yeni eğitim talebi → Döngü genişler</p>
+      <h3>Ölçeklenebilirlik Mekanizması</h3>
+      <ul>
+       <li><strong>Eğitim:</strong> Asenkron içerik ve hibrit formatlarla coğrafya bağımsız ölçekleme</li>
+       <li><strong>B2B:</strong> Sektör dikey genişlemesi (ayakkabı, aksesuar, ev tekstili, müze, endüstriyel tasarım)</li>
+       <li><strong>Yetenek Ağı:</strong> Freelancer-to-team modeli ile esnek kapasite yönetimi</li>
+      </ul>
+      <h3>Fiyatlandırma Stratejisi (Referans Aralıkları)</h3>
+      <ul>
+       <li><strong>Katman 1 — Eğitim (Hacim Odaklı):</strong> Webinarlar (20–50 Dolar), derinlemesine workshoplar (300–500 Dolar).</li>
+       <li><strong>Katman 2 — B2B Hizmet (Değer Odaklı):</strong> Markaya özel dijital ikiz koleksiyon ve kurum içi eğitim (5.000–20.000+ Dolar proje başına).</li>
+       <li><strong>Katman 3 — Yetenek Ağı (Komisyon Modeli):</strong> Proje bütçesi üzerinden %15–20 platform/hizmet bedeli.</li>
+      </ul>
+      <h3>Gelir Çeşitlendirmesi (Uzun Vadeli)</h3>
+      <ul>
+       <li><strong>Sertifikasyon Programları:</strong> Browzwear, CLO3D "Resmi Onaylı Eğitim Merkezi" statüsü ile sertifikasyon geliri.</li>
+       <li><strong>B2B Lisans &amp; Donanım Aracılığı:</strong> Yazılım ve VR donanım reseller işlemleriyle marj.</li>
+      </ul>
+      <h3>Temel Kaynaklar ve Teknolojik Altyapı</h3>
+      <ul>
+       <li><strong>Teknoloji Yatırımı:</strong> VR setleri (Gravity Sketch), Browzwear/CLO3D lisansları, Substance doku kütüphaneleri.</li>
+       <li><strong>İnsan Gücü:</strong> 1 Baş Eğitmen/Küratör, 2–3 asistan mentor, dönemsel konuk endüstri profesyonelleri.</li>
+       <li><strong>Stratejik Ortaklıklar:</strong> İTKİB/İHKİB, Browzwear/CLO direktif anlaşmaları, akademia partnerlikleri.</li>
+      </ul>
+     </div>
+    </section><!-- SLIDE 4: METRİKLER -->
+    <section class="slide" data-index="4">
+     <div class="slide-content fade-in" style="max-width:720px;">
+      <div class="tag" style="margin-bottom:16px;">
+       04
+      </div>
+      <h2>Metrikler, KPI &amp; Sektörel Etki</h2>
+      <h3>Somut Verilerle Ölçülebilir Dönüşüm</h3>
+      <p style="font-family:var(--font-body);font-size:calc(var(--base-size)*0.85px);line-height:1.65;color:var(--text);margin-bottom:16px;">Bu dönüşüm sadece estetik değil, tamamen ölçülebilir bir verimlilik hareketidir. Sektör bazlı hedeflediğimiz kazanımlar:</p>
+      <h3>Verimlilik ve Maliyet Kazançları (Endüstri Benchmarkları)</h3>
+      <ul>
+       <li><strong>Fiziksel Numune Azalması:</strong> 3D prototipleme ile geleneksel süreçlerdeki fiziksel numune üretiminde %50 ila %70 oranında dramatik düşüş.</li>
+       <li><strong>Pazara Çıkış Hızı (Time-to-Market):</strong> Karar verme ve revizyon süreçlerinin dijital ikizler üzerinden yapılmasıyla, haftalar süren onay döngülerinin günlere inmesi.</li>
+       <li><strong>Ayakkabı/Aksesuar Etkisi:</strong> Karmaşık kalıp ve malzeme denemelerinde CAD/simülasyon döngü süresinde %40'a varan zaman tasarrufu.</li>
+      </ul>
+      <h3>Sürdürülebilirlik ve Sosyal Etki</h3>
+      <ul>
+       <li><strong>Karbon ve Atık Azaltımı:</strong> UNEP verilerine göre devasa boyutlarda olan tekstil atığının kaynağında (prototip aşamasında) kesilmesi. Kargo/lojistik kaynaklı CO₂ emisyonlarının minimuma indirilmesi.</li>
+       <li><strong>Yetkinlik Gelişimi:</strong> "Yetenek Ağı" üzerinden sektöre kazandırılan dijital okuryazarlığı yüksek yeni nesil tasarımcı sayısı.</li>
+      </ul>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:20px 0;">
+       <div class="metric-box">
+        <div class="metric-value">
+         %30
+        </div>
+        <div class="metric-label">
+         Geliştirme süresinde iyileşme (benchmark)
+        </div>
+       </div>
+       <div class="metric-box">
+        <div class="metric-value">
+         %50-100
+        </div>
+        <div class="metric-label">
+         Fiziksel numune azaltma potansiyeli
+        </div>
+       </div>
+       <div class="metric-box">
+        <div class="metric-value">
+         ↓ CO₂
+        </div>
+        <div class="metric-label">
+         Lojistik &amp; üretim emisyon etkisi
+        </div>
+       </div>
+      </div>
+      <h3>12 Aylık Hedefler</h3>
+      <ul>
+       <li><strong>Eğitim:</strong> İlk 3 kohort (en az 30 bireysel katılımcı), 2 kurumsal eğitim anlaşması</li>
+       <li><strong>B2B:</strong> 3-5 pilot dijital prototipleme projesi tamamlanması</li>
+       <li><strong>Üretim Ağı:</strong> Minimum 8 aktif freelancer/yetenek, 2 proje bazlı ekip kurulumu</li>
+       <li><strong>Etki:</strong> Pilot müşterilerde numune sürecinde ölçülebilir iyileşme raporu</li>
+      </ul><span class="source-tag">Kaynak: Browzwear Customer Success, 2023; McKinsey SoF 2024</span>
+     </div>
+    </section><!-- SLIDE 5: YOL HARİTASI -->
+    <section class="slide" data-index="5">
+     <div class="slide-content fade-in" style="max-width:720px;">
+      <div class="tag" style="margin-bottom:16px;">
+       05
+      </div>
+      <h2>Yol Haritası</h2>
+      <div style="position:relative;padding-left:28px;border-left:3px solid var(--accent);">
+       <div style="margin-bottom:24px;">
+        <div style="position:absolute;left:-10px;width:18px;height:18px;background:var(--accent);border-radius:50%;"></div>
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.85px);text-transform:uppercase;color:var(--accent);">
+         Faz 1 — Temel (0–6 Ay)
+        </div>
+        <ul style="margin-top:8px;">
+         <li>İlk eğitim kohortlarının başlatılması</li>
+         <li>Müfredat ve pedagojik çerçevenin tamamlanması</li>
+         <li>Pilot B2B danışmanlık projeleri</li>
+        </ul>
+       </div>
+       <div style="margin-bottom:24px;">
+        <div style="position:absolute;left:-10px;width:18px;height:18px;background:var(--accent);border-radius:50%;"></div>
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.85px);text-transform:uppercase;color:var(--accent);">
+         Faz 2 — Genişleme (6–12 Ay)
+        </div>
+        <ul style="margin-top:8px;">
+         <li>Üretim ağı aktivasyonu — mezunlarla ilk proje ekipleri</li>
+         <li>Hibrit eğitim formatları (asenkron + canlı)</li>
+         <li>B2B müşteri portföyü genişletme</li>
+        </ul>
+       </div>
+       <div style="margin-bottom:24px;">
+        <div style="position:absolute;left:-10px;width:18px;height:18px;background:var(--accent);border-radius:50%;"></div>
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.85px);text-transform:uppercase;color:var(--accent);">
+         Faz 3 — Ölçek (12–24 Ay)
+        </div>
+        <ul style="margin-top:8px;">
+         <li>Sektör dikey genişlemesi (ayakkabı, ev tekstili, aksesuar)</li>
+         <li>Uluslararası eğitim erişimi</li>
+         <li>Etki raporlaması ve sürdürülebilirlik metriklerinin yayınlanması</li>
+        </ul>
+       </div>
+      </div>
+     </div>
+    </section><!-- SLIDE 6: KAYNAKLAR -->
+    <section class="slide" data-index="6">
+     <div class="slide-content fade-in" style="max-width:720px;">
+      <div class="tag" style="margin-bottom:16px;">
+       06
+      </div>
+      <h2>Kaynaklar &amp; Referanslar</h2>
+      <div style="font-family:var(--font-body);font-size:calc(var(--base-size)*0.85px);line-height:2;">
+       <p style="margin-bottom:12px;padding:10px 14px;border-left:4px solid var(--accent);background:var(--surface);"><a href="https://browzwear.com/customer-success-stories" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;"><strong>Browzwear</strong> — "Customer Success Stories: Virtual Prototyping Impact", 2023.</a> Sanal prototipleme ile geliştirme süresinde %30 iyileşme, fiziksel numunede %50–100 azalma.</p>
+       <p style="margin-bottom:12px;padding:10px 14px;border-left:4px solid var(--accent);background:var(--surface);"><a href="https://www.mckinsey.com/industries/fashion-luxury-and-hospitality/our-insights/the-state-of-fashion" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;"><strong>McKinsey &amp; Company</strong> — "The State of Fashion 2024".</a> Moda sektöründe dijital dönüşüm eğilimleri, sürdürülebilirlik baskıları ve teknoloji yatırım öncelikleri.</p>
+       <p style="margin-bottom:12px;padding:10px 14px;border-left:4px solid var(--accent);background:var(--surface);"><a href="https://www.clo3d.com" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;"><strong>CLO Virtual Fashion</strong> — 3D garment design platform;</a> sektör standartlarında dijital prototipleme aracı dokümantasyonu.</p>
+       <p style="margin-bottom:12px;padding:10px 14px;border-left:4px solid var(--accent);background:var(--surface);"><strong>Saha Verileri</strong> — Eğitim ve sektörel temaslarda toplanan geri bildirimler, mülakat notları, atölye değerlendirmeleri (2023–2024).</p>
+      </div>
+     </div>
+    </section><!-- SLIDE 7: RİSKLER & SÜRDÜRÜLEBİLİRLİK -->
+    <section class="slide" data-index="7">
+     <div class="slide-content fade-in" style="max-width:720px;">
+      <div class="tag" style="margin-bottom:16px;">
+       07
+      </div>
+      <h2>Riskler &amp; Sürdürülebilirlik</h2>
+      <h3>Risk Yönetimi (Mitigation) Stratejileri</h3>
+      <ul>
+       <li><strong>Rekabet Riski:</strong> CLO3D, Browzwear gibi yazılım devlerinin doğrudan eğitim vermesi. <strong>Yönetim:</strong> Biz salt yazılım öğreticisi değil; pedagoji + Yetenek Ağı kurgusunun insan odaklı "Creative Hub"ı ile rekabetin dışına çıkıyoruz.</li>
+       <li><strong>Pazarlama Riski:</strong> B2B karar verme ve dijital dönüşüm süreçlerinin yavaşlığı. <strong>Yönetim:</strong> İlk vizyoner müşterilerle vurucu "Case Study" raporları ve referansa dayalı büyüme.</li>
+       <li><strong>Kreatif Kolektif Kapasitesi Riski:</strong> Bir proje var ama kreatif kolektiften geri dönüş alamadık ya da proje için uygun yetenekle eşleşemedi. <strong>Yönetim:</strong> Kendi tasarımcı networkum ve eğittiğim öğrencilerle backup kapasite. Proje ihtiyacına göre "Kolektife katılmak ister misiniz?" diye açık çağrı yapıyoruz — kimsenin tutulma baskısı yok, kreatif ortaklık modeli.</li>
+       <li><strong>Finansal Risk:</strong> İlk yatırım ve break-even süresinin uzaması. <strong>Yönetim:</strong> Faz 1'de agresif performans takibi ve sadece "çekiş" metrikleri pozitif olan alanlara kaydırma.</li>
+      </ul>
+      <h3>İş Modeli Sürdürülebilirliği</h3>
+      <h3 style="color:var(--text);font-size:calc(var(--base-size)*0.95px);font-weight:400;margin:12px 0 8px;">Esnek, Talep Bazlı Operasyonel Yapı</h3>
+      <p style="font-family:var(--font-body);font-size:calc(var(--base-size)*0.85px);line-height:1.65;color:var(--text);margin-bottom:12px;">Modelin temel gücü: Başlangıçta fiziksel atölye ya da tam zamanlı kadroya gerek yok. Tüm üretimler (portfolyo ve marketing materyalleri) dijital olacağı için, üretim masrafı sıfır başlıyor. İş geldikçe esnek, proje bazlı bir yetenek ağı ile ölçekleniyor. Bu talep odaklı yapı, başlangıç finansal riskini minimize ederken, operasyonal devamlılığı sağlıyor.</p>
+      <div style="display:grid;grid-template-columns:1fr;gap:12px;margin:16px 0;">
+       <div class="brutalist-border-thin" style="padding:14px;">
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.8px);text-transform:uppercase;color:var(--accent);margin-bottom:8px;">
+         Finansal Marjlar
+        </div>
+        <ul style="margin:0;padding-left:16px;font-size:calc(var(--base-size)*0.82px);">
+         <li><strong>Eğitim:</strong> %60–70 marj</li>
+         <li><strong>B2B Danışmanlık:</strong> %40–50 marj</li>
+         <li><strong>Yetenek Ağı:</strong> %20–30 marj</li>
+         <li style="margin-top:6px;border-top:1px solid var(--accent2);padding-top:6px;"><strong>Break-even: 18–24 ay</strong></li>
+        </ul>
+       </div>
+       <div class="brutalist-border-thin" style="padding:14px;">
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.8px);text-transform:uppercase;color:var(--accent);margin-bottom:8px;">
+         Ölçeklenebilirlik
+        </div>
+        <ul style="margin:0;padding-left:16px;font-size:calc(var(--base-size)*0.82px);">
+         <li>Hibrit/asenkron eğitim → coğrafya bağımsız</li>
+         <li>Sistem talimatları → kolay tekrar üretim</li>
+         <li>Flywheel: Başarılı pilot → Sektör dikey genişlemesi (5 alan)</li>
+        </ul>
+       </div>
+      </div>
+      <h3>Çevresel, Sosyal, Ekonomik Etki (ESG)</h3>
+      <div style="display:grid;grid-template-columns:1fr;gap:12px;margin:16px 0;">
+       <div class="brutalist-border-thin" style="padding:14px;">
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.85px);text-transform:uppercase;color:var(--accent);margin-bottom:8px;">
+         🌍 Çevresel
+        </div>
+        <ul style="margin:0;padding-left:16px;font-size:calc(var(--base-size)*0.82px);">
+         <li>Fiziksel numune atık kaynağında kesme (UNEP: %92 bertaraf)</li>
+         <li>CO₂ azaltımı: Lojistik minimuma</li>
+         <li>Veri merkezi karbon ayak izi dengeleme</li>
+         <li>B Corp sertifikasyonu hedefi</li>
+        </ul>
+       </div>
+       <div class="brutalist-border-thin" style="padding:14px;">
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.85px);text-transform:uppercase;color:var(--accent);margin-bottom:8px;">
+         👥 Sosyal
+        </div>
+        <ul style="margin:0;padding-left:16px;font-size:calc(var(--base-size)*0.82px);">
+         <li>Erişilebilirlik: ≥%40 kadın, coğrafi çeşitlilik</li>
+         <li>Gerçek İstihdam: Mezunların %60'ı doğrudan endüstriye</li>
+         <li>Temsiliyet: Cinsiyet, etnik, fiziksel erişilebilirlik</li>
+        </ul>
+       </div>
+       <div class="brutalist-border-thin" style="padding:14px;">
+        <div style="font-family:var(--font-main);font-weight:700;font-size:calc(var(--base-size)*0.85px);text-transform:uppercase;color:var(--accent);margin-bottom:8px;">
+         💰 Ekonomik
+        </div>
+        <ul style="margin:0;padding-left:16px;font-size:calc(var(--base-size)*0.82px);">
+         <li>B2B ROI: 6 ayda break-even, %50+ kar</li>
+         <li>Sektörel hız: Tasarım-üretim %25 azalma</li>
+         <li>İstihdam: Yıl 1 sonunda 20+ tasarımcıya aktif gelir</li>
+        </ul>
+       </div>
+      </div>
+      <h3>Uzun Vadeli Döngü (Flywheel)</h3>
+      <p style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.8px);line-height:1.8;color:var(--accent2);border-left:4px solid var(--accent);padding-left:16px;margin:16px 0;">Eğitim → Yetenek Havuzu → B2B Kapasite → Müşteri Referansları → Yeni Talebi → Sektör Dikey Genişlemesi</p>
+     </div>
+    </section><!-- SLIDE 8: İLETİŞİM -->
+    <section class="slide" data-index="8">
+     <div class="slide-content fade-in" style="max-width:700px;">
+      <div class="tag" style="margin-bottom:16px;">
+       08
+      </div>
+      <h2>İletişim</h2>
+      <div style="margin:28px 0;">
+       <div class="brutalist-border" style="padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <div>
+         <div style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.7px);text-transform:uppercase;letter-spacing:2px;color:var(--accent2);">
+          İsim
+         </div>
+         <div id="contact-name" style="font-family:var(--font-main);font-size:calc(var(--base-size)*1.4px);font-weight:700;margin-top:4px;">
+          Ayşegül Atik
+         </div>
+        </div>
+        <div>
+         <div style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.7px);text-transform:uppercase;letter-spacing:2px;color:var(--accent2);">
+          E-posta (Birincil)
+         </div>
+         <div id="contact-email" style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.9px);font-weight:700;margin-top:4px;">
+          aysegulatik3@gmail.com
+         </div>
+        </div>
+        <div>
+         <div style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.7px);text-transform:uppercase;letter-spacing:2px;color:var(--accent2);">
+          E-posta (İkincil)
+         </div>
+         <div style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.9px);font-weight:700;margin-top:4px;">
+          aatik@ifaparis.com.tr
+         </div>
+        </div>
+        <div>
+         <div style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.7px);text-transform:uppercase;letter-spacing:2px;color:var(--accent2);">
+          Telefon
+         </div>
+         <div id="contact-phone" style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.9px);font-weight:700;margin-top:4px;">
+          +90 507 425 0695
+         </div>
+        </div>
+        <div>
+         <div style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.7px);text-transform:uppercase;letter-spacing:2px;color:var(--accent2);">
+          Instagram
+         </div>
+         <div style="display:flex;flex-direction:column;gap:4px;margin-top:4px;"><a id="contact-ig" href="https://instagram.com/aysatik" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.9px);font-weight:700;color:var(--accent);text-decoration:none;">@aysatik</a> <a href="https://instagram.com/synthays" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.9px);font-weight:700;color:var(--accent);text-decoration:none;">@synthays</a>
+         </div>
+        </div>
+        <div>
+         <div style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.7px);text-transform:uppercase;letter-spacing:2px;color:var(--accent2);">
+          LinkedIn
+         </div><a id="contact-li" href="https://www.linkedin.com/in/aysegulatik/" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.9px);font-weight:700;margin-top:4px;display:block;color:var(--accent);text-decoration:none;">linkedin.com/in/aysegulatik/</a>
+        </div>
+        <div>
+         <div style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.7px);text-transform:uppercase;letter-spacing:2px;color:var(--accent2);">
+          Website
+         </div><a href="https://aysegulatik.xyz" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-main);font-size:calc(var(--base-size)*0.9px);font-weight:700;margin-top:4px;display:block;color:var(--accent);text-decoration:none;">aysegulatik.xyz</a>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </main><!-- CUSTOMIZATION PANEL (RIGHT SIDEBAR) -->
+   <aside id="customize-panel" class="customize-panel" role="complementary" aria-label="Özelleştirme ayarları">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;"><span style="font-family:var(--font-main);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;">Özelleştir</span> <button id="customize-close" aria-label="Paneli kapat" style="background:none;border:none;cursor:pointer;"> <i data-lucide="x" style="width:20px;height:20px;color:var(--text)"></i> </button>
+    </div><!-- Colors -->
+    <div style="margin-bottom:20px;">
+     <div style="font-family:var(--font-main);font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);margin-bottom:10px;">
+      Renkler
+     </div>
+     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="display:flex;flex-direction:column;gap:4px;"><label style="font-family:var(--font-body);font-size:9px;text-transform:uppercase;color:var(--accent2);">Arka Plan</label> <input type="color" id="bg-color-picker" value="#0A0A0A" style="width:100%;height:36px;border:2px solid var(--accent2);cursor:pointer;">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;"><label style="font-family:var(--font-body);font-size:9px;text-transform:uppercase;color:var(--accent2);">Surface</label> <input type="color" id="surface-color-picker" value="#1A1A1A" style="width:100%;height:36px;border:2px solid var(--accent2);cursor:pointer;">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;"><label style="font-family:var(--font-body);font-size:9px;text-transform:uppercase;color:var(--accent2);">Yazı</label> <input type="color" id="text-color-picker" value="#FFFFFF" style="width:100%;height:36px;border:2px solid var(--accent2);cursor:pointer;">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;"><label style="font-family:var(--font-body);font-size:9px;text-transform:uppercase;color:var(--accent2);">Aksan 1</label> <input type="color" id="accent-color-picker" value="#00D9FF" style="width:100%;height:36px;border:2px solid var(--accent);cursor:pointer;">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;grid-column:1/3;"><label style="font-family:var(--font-body);font-size:9px;text-transform:uppercase;color:var(--accent2);">Aksan 2</label> <input type="color" id="accent2-color-picker" value="#888888" style="width:100%;height:36px;border:2px solid var(--accent2);cursor:pointer;">
+      </div>
+     </div>
+    </div><!-- Fonts -->
+    <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:2px solid var(--accent2);">
+     <div style="font-family:var(--font-main);font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);margin-bottom:10px;">
+      Fontlar
+     </div><select id="font-family-select" style="width:100%;padding:8px;font-family:var(--font-main);font-size:11px;background:var(--surface);color:var(--text);border:2px solid var(--accent2);cursor:pointer;"> <option value="Space Mono">Space Mono</option> <option value="JetBrains Mono">JetBrains Mono</option> <option value="Courier New">Courier New</option> <option value="Courier Prime">Courier Prime</option> </select>
+    </div><!-- Font Size -->
+    <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:2px solid var(--accent2);">
+     <div style="font-family:var(--font-main);font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);margin-bottom:10px;">
+      Metin Boyutu
+     </div>
+     <div style="display:flex;gap:8px;"><input type="range" id="font-size-slider" min="12" max="20" value="15" style="flex:1;cursor:pointer;"> <span id="font-size-value" style="font-family:var(--font-main);font-weight:700;width:30px;text-align:center;color:var(--text);">15</span>
+     </div>
+    </div><!-- Texture -->
+    <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:2px solid var(--accent2);">
+     <div style="font-family:var(--font-main);font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);margin-bottom:10px;">
+      Doku
+     </div>
+     <div style="display:flex;flex-direction:column;gap:6px;"><button id="texture-none" class="texture-btn" data-texture="none" style="padding:8px;font-family:var(--font-main);font-size:10px;font-weight:700;background:var(--surface);color:var(--text);border:2px solid var(--accent);cursor:pointer;text-transform:uppercase;">Yok</button> <button id="texture-grid" class="texture-btn" data-texture="grid" style="padding:8px;font-family:var(--font-main);font-size:10px;font-weight:700;background:var(--surface);color:var(--text);border:2px solid var(--accent2);cursor:pointer;text-transform:uppercase;">Işık Grid</button>
+     </div>
+    </div>
+    <div style="padding-top:16px;border-top:2px solid var(--accent2);">
+     <div style="font-family:var(--font-main);font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);margin-bottom:10px;">
+      Kreatif
+     </div>
+     <p style="font-family:var(--font-body);font-size:9px;line-height:1.5;color:var(--accent2);">Sunum tema ve stilini gerçek zamanlı olarak özelleştir.</p>
+    </div>
+   </aside><!-- PROGRESS BAR -->
+   <div id="progress-bar" class="progress-bar"></div>
+  </div>
+  <script>
+const defaultConfig = {
+  applicant_name: 'Ayşegül Atik',
+  project_title: 'Dijital Prototipleme & Zanaat Yetenek Ağı',
+  email_primary: 'aysegulatik3@gmail.com',
+  email_secondary: 'aatik@ifaparis.com.tr',
+  phone_number_display: '+90 507 425 0695',
+  instagram_primary: '@aysatik',
+  instagram_secondary: '@synthays',
+  linkedin_url: 'https://www.linkedin.com/in/aysegulatik/',
+  github_url: 'https://github.com/aysatik',
+  website_url: 'https://aysegulatik.xyz',
+  background_color: '#0A0A0A',
+  surface_color: '#1A1A1A',
+  text_color: '#FFFFFF',
+  accent_color: '#00D9FF',
+  accent2_color: '#888888',
+  font_family: 'Space Mono',
+  font_size: 15
+};
+
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const navItems = document.querySelectorAll('#nav-list .nav-item');
+
+function updateProgressBar() {
+  const progress = (currentSlide / (slides.length - 1)) * 100;
+  document.getElementById('progress-bar').style.width = progress + '%';
+}
+
+function goToSlide(index) {
+  currentSlide = index;
+  slides.forEach(s => s.classList.remove('active-slide'));
+  slides[index].classList.add('active-slide');
+  const inner = slides[index].querySelector('.fade-in, .slide-content');
+  if (inner) { inner.classList.remove('fade-in'); void inner.offsetWidth; inner.classList.add('fade-in'); }
+  navItems.forEach(n => n.classList.remove('active'));
+  navItems[index]?.classList.add('active');
+  document.getElementById('page-indicator').textContent =
+    String(index + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+  document.getElementById('main-content').scrollTop = 0;
+  updateProgressBar();
+}
+
+navItems.forEach(btn => {
+  btn.addEventListener('click', () => goToSlide(parseInt(btn.dataset.slide)));
+});
+
+// Mobile nav
+const mobileNavList = document.getElementById('mobile-nav-list');
+navItems.forEach(btn => {
+  const clone = btn.cloneNode(true);
+  clone.addEventListener('click', () => {
+    goToSlide(parseInt(clone.dataset.slide));
+    closeMobileSidebar();
+  });
+  mobileNavList.appendChild(clone);
+});
+
+function openMobileSidebar() {
+  document.getElementById('mobile-sidebar').style.left = '0';
+  document.getElementById('mobile-sidebar-overlay').classList.add('open');
+}
+function closeMobileSidebar() {
+  document.getElementById('mobile-sidebar').style.left = '-280px';
+  document.getElementById('mobile-sidebar-overlay').classList.remove('open');
+}
+document.getElementById('mobile-menu-btn')?.addEventListener('click', openMobileSidebar);
+document.getElementById('mobile-sidebar-overlay').addEventListener('click', closeMobileSidebar);
+
+// Customize panel
+function openCustomize() {
+  document.getElementById('customize-panel').classList.add('open');
+  document.getElementById('a11y-overlay').classList.add('open');
+}
+function closeCustomize() {
+  document.getElementById('customize-panel').classList.remove('open');
+  document.getElementById('a11y-overlay').classList.remove('open');
+}
+document.getElementById('customize-toggle')?.addEventListener('click', openCustomize);
+document.getElementById('mobile-customize-btn')?.addEventListener('click', openCustomize);
+document.getElementById('customize-close').addEventListener('click', closeCustomize);
+document.getElementById('a11y-overlay').addEventListener('click', closeCustomize);
+
+// Color pickers
+document.getElementById('bg-color-picker').addEventListener('change', (e) => {
+  document.documentElement.style.setProperty('--bg', e.target.value);
+});
+document.getElementById('surface-color-picker').addEventListener('change', (e) => {
+  document.documentElement.style.setProperty('--surface', e.target.value);
+});
+document.getElementById('text-color-picker').addEventListener('change', (e) => {
+  document.documentElement.style.setProperty('--text', e.target.value);
+});
+document.getElementById('accent-color-picker').addEventListener('change', (e) => {
+  document.documentElement.style.setProperty('--accent', e.target.value);
+});
+document.getElementById('accent2-color-picker').addEventListener('change', (e) => {
+  document.documentElement.style.setProperty('--accent2', e.target.value);
+});
+
+// Font selector
+document.getElementById('font-family-select').addEventListener('change', (e) => {
+  document.documentElement.style.setProperty('--font-main', `'${e.target.value}', monospace`);
+});
+
+// Font size slider
+document.getElementById('font-size-slider').addEventListener('input', (e) => {
+  const size = e.target.value;
+  document.documentElement.style.setProperty('--base-size', size);
+  document.getElementById('font-size-value').textContent = size;
+});
+
+// Texture buttons
+document.querySelectorAll('.texture-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.texture-btn').forEach(b => b.style.borderColor = 'var(--accent2)');
+    if (btn.dataset.texture === 'grid') {
+      document.body.classList.add('texture-grid');
+      btn.style.borderColor = 'var(--accent)';
+    } else {
+      document.body.classList.remove('texture-grid');
+      document.getElementById('texture-none').style.borderColor = 'var(--accent)';
+    }
+  });
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+    e.preventDefault();
+    if (currentSlide < slides.length - 1) goToSlide(currentSlide + 1);
+  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (currentSlide > 0) goToSlide(currentSlide - 1);
+  }
+});
+
+// Element SDK
+function applyConfig(config) {
+  const r = document.documentElement.style;
+  r.setProperty('--bg', config.background_color || defaultConfig.background_color);
+  r.setProperty('--surface', config.surface_color || defaultConfig.surface_color);
+  r.setProperty('--text', config.text_color || defaultConfig.text_color);
+  r.setProperty('--accent', config.accent_color || defaultConfig.accent_color);
+  r.setProperty('--accent2', config.accent2_color || defaultConfig.accent2_color);
+  r.setProperty('--base-size', config.font_size || defaultConfig.font_size);
+
+  const font = config.font_family || defaultConfig.font_family;
+  r.setProperty('--font-main', `'${font}', monospace`);
+
+  const name = config.applicant_name || defaultConfig.applicant_name;
+  const project = config.project_title || defaultConfig.project_title;
+  const program = config.program_name || defaultConfig.program_name;
+
+  document.getElementById('sidebar-name').textContent = name.toUpperCase();
+  document.getElementById('project-title-sidebar').textContent = project;
+  document.getElementById('cover-name').textContent = name;
+  document.getElementById('contact-name').textContent = name;
+  document.getElementById('contact-program').textContent = program;
+}
+
+if (window.elementSdk) {
+  window.elementSdk.init({
+    defaultConfig: defaultConfig,
+    onConfigChange: async (config) => {
+      applyConfig(config);
+    },
+    mapToCapabilities: (config) => ({
+      recolorables: [
+        { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+        { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+        { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+        { get: () => config.accent_color || defaultConfig.accent_color, set: (v) => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); } },
+        { get: () => config.accent2_color || defaultConfig.accent2_color, set: (v) => { config.accent2_color = v; window.elementSdk.setConfig({ accent2_color: v }); } }
+      ],
+      borderables: [],
+      fontEditable: {
+        get: () => config.font_family || defaultConfig.font_family,
+        set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+      },
+      fontSizeable: {
+        get: () => config.font_size || defaultConfig.font_size,
+        set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+      }
+    }),
+    mapToEditPanelValues: (config) => new Map([
+      ['applicant_name', config.applicant_name || defaultConfig.applicant_name],
+      ['project_title', config.project_title || defaultConfig.project_title],
+      ['program_name', config.program_name || defaultConfig.program_name],
+      ['email_primary', config.email_primary || defaultConfig.email_primary],
+      ['email_secondary', config.email_secondary || defaultConfig.email_secondary],
+      ['phone_number_display', config.phone_number_display || defaultConfig.phone_number_display],
+      ['instagram_primary', config.instagram_primary || defaultConfig.instagram_primary],
+      ['instagram_secondary', config.instagram_secondary || defaultConfig.instagram_secondary],
+      ['linkedin_url', config.linkedin_url || defaultConfig.linkedin_url],
+      ['github_url', config.github_url || defaultConfig.github_url],
+      ['website_url', config.website_url || defaultConfig.website_url]
+    ])
+  });
+} else {
+  applyConfig(defaultConfig);
+}
+
+// Set initial texture button state
+document.getElementById('texture-none').style.borderColor = 'var(--accent)';
+
+// Initial progress bar
+updateProgressBar();
+
+lucide.createIcons();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e30b8d8110a559d',t:'MTc3NDYzODkwOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
